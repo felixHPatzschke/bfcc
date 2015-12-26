@@ -7,10 +7,12 @@
  */
 
 #include <cstdlib>
+#include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include <fstream>
 #include <string>
+#include <fstream>
+#include <sstream>
 #include "operators.h"
 
 
@@ -32,33 +34,111 @@ inline std::string parseBF(std::string b)
     res.assign( (std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()) );
     
     std::size_t bfCodePoint = 0;
+    
+    signed int consecutive_pointer_increments = 0;
+    signed int consecutive_value_increments = 0 ;
+    
     while(bfCodePoint <= b.length())
     {
-        if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_POINTER)
+        if(consecutive_pointer_increments==0 && consecutive_value_increments==0)
         {
-            parsed.append(C_INCREMENT_POINTER);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_POINTER)
+            if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_POINTER)
+            {
+                consecutive_pointer_increments++;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_POINTER)
+            {
+                consecutive_pointer_increments--;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_VALUE)
+            {
+                consecutive_value_increments++;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_VALUE)
+            {
+                consecutive_value_increments--;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_READ_VALUE)
+            {
+                parsed.append(C_READ_VALUE);
+            }else if(cbc[bfCodePoint] == BRAINFUCK_WRITE_VALUE)
+            {
+                parsed.append(C_WRITE_VALUE);
+            }else if(cbc[bfCodePoint] == BRAINFUCK_BEGIN_LOOP)
+            {
+                parsed.append(C_BEGIN_LOOP);
+            }else if(cbc[bfCodePoint] == BRAINFUCK_END_LOOP)
+            {
+                parsed.append(C_END_LOOP);
+            }
+        }else if(consecutive_value_increments==0)   //consecutive_pointer_increments != 0
         {
-            parsed.append(C_DECREMENT_POINTER);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_VALUE)
+            if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_POINTER)
+            {
+                consecutive_pointer_increments++;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_POINTER)
+            {
+                consecutive_pointer_increments--;
+            }else
+            {
+                if(consecutive_pointer_increments == 1)
+                {
+                    parsed.append(C_INCREMENT_POINTER_ONCE);
+                }else if(consecutive_pointer_increments == -1)
+                {
+                    parsed.append(C_DECREMENT_POINTER_ONCE);
+                }else if(consecutive_pointer_increments == 0)
+                {
+                    // In case of something like this: ><: Do nothing
+                }else if(consecutive_pointer_increments >= 0)
+                {
+                    std::ostringstream oss;
+                    oss << C_INCREMENT_POINTER_CONSECUTIVE_1 << (consecutive_pointer_increments) << C_CONSECUTIVE_2 << C_INCREMENT_POINTER_CONSECUTIVE_3;
+                    parsed.append(oss.str());
+                }else if(consecutive_pointer_increments <= 0)
+                {
+                    std::ostringstream oss;
+                    oss << C_DECREMENT_POINTER_CONSECUTIVE_1 << (-1*consecutive_pointer_increments) << C_CONSECUTIVE_2 << C_DECREMENT_POINTER_CONSECUTIVE_3;
+                    parsed.append(oss.str());
+                }
+                consecutive_pointer_increments = 0;
+                bfCodePoint--;
+            }
+            
+        }else if(consecutive_pointer_increments==0)   //consecutive_value_increments != 0
         {
-            parsed.append(C_INCREMENT_VALUE);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_VALUE)
-        {
-            parsed.append(C_DECREMENT_VALUE);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_WRITE_VALUE)
-        {
-            parsed.append(C_WRITE_VALUE);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_READ_VALUE)
-        {
-            parsed.append(C_READ_VALUE);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_BEGIN_LOOP)
-        {
-            parsed.append(C_BEGIN_LOOP);
-        }else if(cbc[bfCodePoint] == BRAINFUCK_END_LOOP)
-        {
-            parsed.append(C_END_LOOP);
+            if(cbc[bfCodePoint] == BRAINFUCK_INCREMENT_VALUE)
+            {
+                consecutive_value_increments++;
+            }else if(cbc[bfCodePoint] == BRAINFUCK_DECREMENT_VALUE)
+            {
+                consecutive_value_increments--;
+            }else
+            {
+                if(consecutive_value_increments == 1)
+                {
+                    parsed.append(C_INCREMENT_VALUE_ONCE);
+                }else if(consecutive_value_increments == -1)
+                {
+                    parsed.append(C_DECREMENT_VALUE_ONCE);
+                }else if(consecutive_value_increments == 0)
+                {
+                    // In case of something like this: ><: Do nothing
+                }else if(consecutive_value_increments >= 0)
+                {
+                    std::ostringstream oss;
+                    oss << C_INCREMENT_VALUE_CONSECUTIVE_1 << (consecutive_value_increments) << C_CONSECUTIVE_2 << C_INCREMENT_VALUE_CONSECUTIVE_3;
+                    parsed.append(oss.str());
+                }else if(consecutive_value_increments <= 0)
+                {
+                    std::ostringstream oss;
+                    oss << C_DECREMENT_VALUE_CONSECUTIVE_1 << (-1*consecutive_value_increments) << C_CONSECUTIVE_2 << C_DECREMENT_VALUE_CONSECUTIVE_3;
+                    parsed.append(oss.str());
+                }
+                consecutive_value_increments = 0;
+                bfCodePoint--;
+            }
+            
         }
+        
+        
+        
         bfCodePoint++;
     }
     

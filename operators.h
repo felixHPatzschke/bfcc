@@ -19,10 +19,21 @@
 #define BRAINFUCK_BEGIN_LOOP '['
 #define BRAINFUCK_END_LOOP ']'
 
-#define C_INCREMENT_POINTER "    if(ptr==BRAINFUCK_STACK_SIZE-1)\n        ptr=0;\n    else\n        ptr++;\n"
-#define C_DECREMENT_POINTER "    if(ptr==0)\n        ptr=BRAINFUCK_STACK_SIZE-1;\n    else\n        ptr--;\n"
-#define C_INCREMENT_VALUE "    stack[ptr]++;\n    if(stack[ptr]>BRAINFUCK_MAX_VALUE)\n        stack[ptr]=BRAINFUCK_MIN_VALUE;\n"
-#define C_DECREMENT_VALUE "    stack[ptr]--;\n    if(stack[ptr]<BRAINFUCK_MIN_VALUE)\n        stack[ptr]=BRAINFUCK_MAX_VALUE;\n"
+#define MAX_CONSECUTIVES 64
+
+#define C_INCREMENT_POINTER_ONCE "    if(ptr==BRAINFUCK_STACK_SIZE-1)\n        ptr=0;\n    else\n        ptr++;\n"
+#define C_DECREMENT_POINTER_ONCE "    if(ptr==0)\n        ptr=BRAINFUCK_STACK_SIZE-1;\n    else\n        ptr--;\n"
+#define C_INCREMENT_VALUE_ONCE "    stack[ptr]++;\n    if(stack[ptr]>BRAINFUCK_MAX_VALUE)\n        stack[ptr]=BRAINFUCK_MIN_VALUE;\n"
+#define C_DECREMENT_VALUE_ONCE "    stack[ptr]--;\n    if(stack[ptr]<BRAINFUCK_MIN_VALUE)\n        stack[ptr]=BRAINFUCK_MAX_VALUE;\n"
+#define C_INCREMENT_POINTER_CONSECUTIVE_1 "    ptr+="
+#define C_DECREMENT_POINTER_CONSECUTIVE_1 "    ptr-="
+#define C_INCREMENT_VALUE_CONSECUTIVE_1 "    stack[ptr]+="
+#define C_DECREMENT_VALUE_CONSECUTIVE_1 "    stack[ptr]-="
+#define C_CONSECUTIVE_2 ";\n"
+#define C_INCREMENT_POINTER_CONSECUTIVE_3 "    if(ptr>=BRAINFUCK_STACK_SIZE)\n        ptr-=BRAINFUCK_STACK_SIZE;\n"
+#define C_DECREMENT_POINTER_CONSECUTIVE_3 "    if(ptr<0)\n        ptr+=BRAINFUCK_STACK_SIZE;\n"
+#define C_INCREMENT_VALUE_CONSECUTIVE_3 "    \n"
+#define C_DECREMENT_VALUE_CONSECUTIVE_3 "    \n"
 #define C_WRITE_VALUE "    putchar(stack[ptr]);\n"
 #define C_READ_VALUE "    stack[ptr]=getchar();\n"
 #define C_BEGIN_LOOP "    while(stack[ptr]!=BRAINFUCK_ESCAPE_VALUE)\n    {\n"
