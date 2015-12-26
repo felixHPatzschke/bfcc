@@ -9,6 +9,7 @@
 // Maybe some machine-specific stuff
 #define BRAINFUCK_MIN_VALUE 0
 #define BRAINFUCK_MAX_VALUE 255
+#define BRAINFUCK_ESCAPE_VALUE 0
 
 
 #ifdef BRAINFUCK_COMPILE_OUTPUT
@@ -25,7 +26,7 @@ int skeletonCode()
     }
     ptr = 0;
     
-    //ParseOutput
+//ParseOutput
     
 #ifdef DEBUG
     printf("\n\nPress [ENTER] to exit the program.\nIronic, isn't it?\n");

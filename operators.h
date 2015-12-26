@@ -25,7 +25,7 @@
 #define C_DECREMENT_VALUE "    stack[ptr]--;\n    if(stack[ptr]<BRAINFUCK_MIN_VALUE)\n        stack[ptr]=BRAINFUCK_MAX_VALUE;\n"
 #define C_WRITE_VALUE "    putchar(stack[ptr]);\n"
 #define C_READ_VALUE "    stack[ptr]=getchar();\n"
-#define C_BEGIN_LOOP "    while(stack[ptr]!=0)\n    {\n"
+#define C_BEGIN_LOOP "    while(stack[ptr]!=BRAINFUCK_ESCAPE_VALUE)\n    {\n"
 #define C_END_LOOP "    }\n"
 
     /* List of Brainfuck operators and equivalent C code
