@@ -106,8 +106,8 @@ int main(int argc, char** argv)
     std::string cCode = "";
     
 #ifdef DEBUG
-    inputFileName = "C:\\Users\\felix\\Documents\\NetBeansProjects\\EPLCC\\bfcc\\helloWorld.b";
-    outputFileName = "C:\\Users\\felix\\Documents\\NetBeansProjects\\EPLCC\\bfcc\\helloWorld.exe";
+    inputFileName = "mandelbrot.b";
+    outputFileName = "mandelbrot.exe";
     
 #else
     if(argc == 0)
@@ -150,14 +150,9 @@ int main(int argc, char** argv)
     std::cout << (cFileName) << std::endl;
 #endif
     
-    std::ofstream outstream(cFileName);
+    std::ofstream outstream(cFileName.c_str());
     outstream << cCode;
     outstream.close();
-
-    //cFileName = "C:\\Users\\felix\\Documents\\NetBeansProjects\\EPLCC\\main.c";
-    
-
-    
     
     std::string gccCommand = "gcc \"" + cFileName + "\" -o \"" + outputFileName + "\"";
 #ifdef DEBUG
