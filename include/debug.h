@@ -23,17 +23,6 @@ std::string shortenFileName(std::string s)
     return s;
 }
 
-std::string addTabs(std::string s)
-{
-    size_t startPos = 0;
-    while((startPos = s.find("\n", startPos)) != std::string::npos)
-    {
-        s.replace(startPos, 2, "\n\t");
-        startPos += 4;
-    }
-    return s;
-}
-
 #define LOG(msg) \
     std::cout << shortenFileName(__FILE__) << " in line " << __LINE__ << ":\n" << msg << std::endl
 

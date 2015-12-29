@@ -151,6 +151,20 @@ inline std::string parseBF(std::string b)
         res.replace(startPos, 17, "#define BRAINFUCK_COMPILE_OUTPUT");
         startPos += 4;
     }
+    /*
+    startPos = 0;
+    while((startPos = res.find("//PBrainFlag", startPos)) != std::string::npos)
+    {
+        res.replace(startPos, 12, "#define PBRAIN");
+        startPos += 4;
+    }
+    startPos = 0;
+    while((startPos = res.find("//16BitFlag", startPos)) != std::string::npos)
+    {
+        res.replace(startPos, 11, "#define SIXTEEN_BIT");
+        startPos += 4;
+    }
+    */
     startPos = 0;
     while((startPos = res.find("//ParseOutput", startPos)) != std::string::npos)
     {
