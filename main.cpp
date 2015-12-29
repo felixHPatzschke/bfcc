@@ -13,9 +13,9 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "operators.h"
-#include "parsing.h"
-#include "optimization.h"
+#include "include/operators.h"
+#include "include/parsing.h"
+#include "include/optimization.h"
 
 
 inline bool checkBrackets(std::string b)
@@ -42,8 +42,8 @@ int main(int argc, char** argv)
     std::string cCode = "";
     
 #ifdef DEBUG
-    inputFileName = "mandelbrot.b";
-    outputFileName = "mandelbrot.exe";
+    inputFileName = "examples/helloWorld.b";
+    outputFileName = "helloWorld.exe";
     
 #else
     if(argc == 0)
