@@ -8,7 +8,7 @@
 #define BRAINFUCK_MAX_VALUE 255
 #define BRAINFUCK_ESCAPE_VALUE 0
 #ifdef BRAINFUCK_COMPILE_OUTPUT
-int main(int argc, char** argv)
+int main()
 #else
 int skeletonCode()
 #endif
