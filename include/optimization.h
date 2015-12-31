@@ -35,7 +35,7 @@
 #define C_NULL_LOOP_TERMINATED_LOOP_2 "    stack[ptr]=BRAINFUCK_ESCAPE_VALUE;\n    }\n"
 
 
-inline std::string clean(std::string *b)
+inline void clean(std::string *b)
 {
     const char* cs = b->c_str();
     std::string res = "";
@@ -58,10 +58,18 @@ inline std::string clean(std::string *b)
             res.append(BRAINFUCK_BEGIN_LOOP_STRING);
         else if(cs[p] == BRAINFUCK_END_LOOP)
             res.append(BRAINFUCK_END_LOOP_STRING);
-        
+#ifdef PBRAIN
+        else if(cs[p] == PBRAIN_BEGIN_FUNCTION)
+            res.append(PBRAIN_BEGIN_FUNCTION_STRING);
+        else if(cs[p] == PBRAIN_END_FUNCTION)
+            res.append(PBRAIN_END_FUNCTION_STRING);
+        else if(cs[p] == PBRAIN_CALL_FUNCTION)
+            res.append(PBRAIN_CALL_FUNCTION_STRING);
+#endif
         p++;
     }
-    return res;
+    *b = res;
+    return;
 }
 
 inline void flag_null_loops(std::string *b)

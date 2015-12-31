@@ -42,8 +42,8 @@ int main(int argc, char** argv)
     std::string cCode = "";
     
 #ifdef DEBUG
-    inputFileName = "examples/helloWorld.b";
-    outputFileName = "helloWorld.exe";
+    inputFileName = "examples/pbrainTest.pb";
+    outputFileName = "pbrainTest.exe";
     
 #else
     if(argc == 0)
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     
     if(!checkBrackets(fileContent))
         return EXIT_FAILURE;
-    fileContent = clean(&fileContent);
+    clean(&fileContent);
     optimize(&fileContent);
 #ifdef DEBUG
     std::cout << fileContent << std::endl;

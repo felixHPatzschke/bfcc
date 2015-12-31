@@ -10,6 +10,10 @@
 #define OPERATORS_H
 
 
+#include "pbrain.h"
+#define PBRAIN
+
+
 #define BRAINFUCK_INCREMENT_POINTER '>'
 #define BRAINFUCK_DECREMENT_POINTER '<'
 #define BRAINFUCK_INCREMENT_VALUE '+'
