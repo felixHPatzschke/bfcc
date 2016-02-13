@@ -20,12 +20,10 @@ void (*function[BRAINFUCK_MAX_VALUE+1])();
 void not_yet_defined_function()
 {
 #ifdef DEBUG
-    printf("\n\nERROR: Undefined function call\n");
+    printf("\n\nERROR: Undefined function call\n\nPress [ENTER] to exit the program.\nIronic, isn't it?\n");
     getchar();
-    exit(EXIT_FAILURE);
-#else
-    exit(EXIT_FAILURE);
 #endif
+    exit(EXIT_FAILURE);
 }
 #endif /* PBRAIN */
 #ifdef BRAINFUCK_COMPILE_OUTPUT
